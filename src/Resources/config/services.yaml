@@ -6,3 +6,6 @@ services:
 
   Tourze\EasyAdminMenuBundle\Service\:
     resource: '../../Service/'
+
+  easy-admin-menu.factory:
+    class: Knp\Menu\MenuFactory
