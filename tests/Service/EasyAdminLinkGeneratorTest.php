@@ -8,6 +8,7 @@ use Tourze\EasyAdminMenuBundle\Service\EasyAdminLinkGenerator;
 
 /**
  * 由于 AdminUrlGenerator 是 final 类，我们需要创建一个包装器以便测试
+ * @internal
  */
 class AdminUrlGeneratorWrapper
 {
@@ -63,6 +64,7 @@ class AdminUrlGeneratorWrapper
 /**
  * 用于测试 extractEntityFqcn 方法的包装类
  * 由于 AdminUrlGenerator 是 final 类，无法模拟，我们创建一个包装类来测试核心逻辑
+ * @internal
  */
 class ExtractEntityFqcnTester
 {

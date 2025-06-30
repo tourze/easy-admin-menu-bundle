@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 /**
  * EasyAdmin链接生成器
  */
-#[AsAlias(LinkGeneratorInterface::class)]
+#[AsAlias(id: LinkGeneratorInterface::class)]
 class EasyAdminLinkGenerator implements LinkGeneratorInterface
 {
     public function __construct(

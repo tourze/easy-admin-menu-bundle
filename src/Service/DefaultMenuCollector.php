@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class DefaultMenuCollector implements MenuCollectorInterface
 {
     public function __construct(
-        #[TaggedIterator('easy-admin-menu.provider')] private readonly iterable $providers,
+        #[TaggedIterator(tag: 'easy-admin-menu.provider')] private readonly iterable $providers,
         #[Autowire(service: 'easy-admin-menu.factory')] private readonly FactoryInterface $factory,
     )
     {

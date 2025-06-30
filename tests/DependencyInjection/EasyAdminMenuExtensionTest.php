@@ -11,12 +11,10 @@ use Tourze\EasyAdminMenuBundle\DependencyInjection\EasyAdminMenuExtension;
 
 class EasyAdminMenuExtensionTest extends TestCase
 {
-    private EasyAdminMenuExtension $extension;
     private MockObject|ContainerBuilder $containerBuilder;
 
     protected function setUp(): void
     {
-        $this->extension = new EasyAdminMenuExtension();
         $this->containerBuilder = $this->createMock(ContainerBuilder::class);
     }
 
