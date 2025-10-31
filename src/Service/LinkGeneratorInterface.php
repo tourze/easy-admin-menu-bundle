@@ -13,4 +13,9 @@ interface LinkGeneratorInterface
      * 从URL中提取实体类名
      */
     public function extractEntityFqcn(string $url): ?string;
+
+    /**
+     * 设置默认 Dashboard
+     */
+    public function setDashboard(string $dashboardControllerFqcn): void;
 }

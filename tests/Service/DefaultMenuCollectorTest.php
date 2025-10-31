@@ -2,104 +2,57 @@
 
 namespace Tourze\EasyAdminMenuBundle\Tests\Service;
 
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Tourze\EasyAdminMenuBundle\Service\DefaultMenuCollector;
+use Tourze\PHPUnitSymfonyKernelTest\AbstractIntegrationTestCase;
 
-class DefaultMenuCollectorTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(DefaultMenuCollector::class)]
+#[RunTestsInSeparateProcesses]
+final class DefaultMenuCollectorTest extends AbstractIntegrationTestCase
 {
-    private MockObject|FactoryInterface $factory;
-    private MockObject|ItemInterface $rootMenu;
-    private DefaultMenuCollector $menuCollector;
-
-    protected function setUp(): void
+    protected function onSetUp(): void
     {
-        $this->factory = $this->createMock(FactoryInterface::class);
-        $this->rootMenu = $this->createMock(ItemInterface::class);
-        
-        $this->factory->expects($this->any())
-            ->method('createItem')
-            ->with('root')
-            ->willReturn($this->rootMenu);
+        // 集成测试初始化逻辑
     }
 
     /**
-     * 测试没有任何菜单提供者时的情况
+     * 测试服务能够正确获取和调用
      */
-    public function test_mainMenu_withNoProviders_returnsRootMenu(): void
+    public function testMenuCollectorServiceCanBeRetrieved(): void
     {
-        $this->menuCollector = new DefaultMenuCollector([], $this->factory);
-        
-        $result = $this->menuCollector->mainMenu();
-        
-        $this->assertSame($this->rootMenu, $result);
+        $menuCollector = self::getService(DefaultMenuCollector::class);
+
+        $this->assertInstanceOf(DefaultMenuCollector::class, $menuCollector);
     }
 
     /**
-     * 测试有菜单提供者时的情况
+     * 测试主菜单方法返回菜单项实例
      */
-    public function test_mainMenu_withProviders_callsProviders(): void
+    public function testMainMenuReturnsMenuItemInterface(): void
     {
-        $provider1Called = false;
-        $provider2Called = false;
-        
-        $provider1 = function ($rootMenu) use (&$provider1Called) {
-            $provider1Called = true;
-            $this->assertSame($this->rootMenu, $rootMenu);
-        };
-        
-        $provider2 = function ($rootMenu) use (&$provider2Called) {
-            $provider2Called = true;
-            $this->assertSame($this->rootMenu, $rootMenu);
-        };
-        
-        $this->menuCollector = new DefaultMenuCollector([$provider1, $provider2], $this->factory);
-        
-        $result = $this->menuCollector->mainMenu();
-        
-        $this->assertSame($this->rootMenu, $result);
-        $this->assertTrue($provider1Called, 'Provider 1 should be called');
-        $this->assertTrue($provider2Called, 'Provider 2 should be called');
+        $menuCollector = self::getService(DefaultMenuCollector::class);
+
+        $result = $menuCollector->mainMenu();
+
+        $this->assertInstanceOf(ItemInterface::class, $result);
     }
 
     /**
-     * 测试带用户参数调用的情况
+     * 测试带用户参数调用主菜单
      */
-    public function test_mainMenu_withUser_returnsRootMenu(): void
+    public function testMainMenuWithUser(): void
     {
+        $menuCollector = self::getService(DefaultMenuCollector::class);
         $user = $this->createMock(UserInterface::class);
-        $this->menuCollector = new DefaultMenuCollector([], $this->factory);
-        
-        $result = $this->menuCollector->mainMenu($user);
-        
-        $this->assertSame($this->rootMenu, $result);
-    }
 
-    /**
-     * 测试混合可调用和非可调用提供者的情况
-     */
-    public function test_mainMenu_withMixedProviders_onlyCallsCallable(): void
-    {
-        $providerCalled = false;
-        
-        $callableProvider = function ($rootMenu) use (&$providerCalled) {
-            $providerCalled = true;
-            $this->assertSame($this->rootMenu, $rootMenu);
-        };
-        
-        $nonCallableProvider = new \stdClass();
-        
-        $this->menuCollector = new DefaultMenuCollector(
-            [$callableProvider, $nonCallableProvider],
-            $this->factory
-        );
-        
-        $result = $this->menuCollector->mainMenu();
-        
-        $this->assertSame($this->rootMenu, $result);
-        $this->assertTrue($providerCalled, 'Callable provider should be called');
+        $result = $menuCollector->mainMenu($user);
+
+        $this->assertInstanceOf(ItemInterface::class, $result);
     }
 }

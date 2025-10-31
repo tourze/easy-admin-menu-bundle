@@ -7,5 +7,8 @@ services:
   Tourze\EasyAdminMenuBundle\Service\:
     resource: '../../Service/'
 
+  Tourze\EasyAdminMenuBundle\Service\LinkGeneratorInterface:
+    alias: Tourze\EasyAdminMenuBundle\Service\EasyAdminLinkGenerator
+
   easy-admin-menu.factory:
     class: Knp\Menu\MenuFactory

@@ -5,18 +5,22 @@ namespace Tourze\EasyAdminMenuBundle\Service;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsAlias(id: MenuCollectorInterface::class)]
+#[Autoconfigure(public: true)]
 class DefaultMenuCollector implements MenuCollectorInterface
 {
+    /**
+     * @param iterable<object> $providers
+     */
     public function __construct(
-        #[TaggedIterator(tag: 'easy-admin-menu.provider')] private readonly iterable $providers,
+        #[AutowireIterator(tag: 'easy-admin-menu.provider')] private readonly iterable $providers,
         #[Autowire(service: 'easy-admin-menu.factory')] private readonly FactoryInterface $factory,
-    )
-    {
+    ) {
     }
 
     /**
