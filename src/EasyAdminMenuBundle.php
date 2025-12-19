@@ -8,7 +8,7 @@ use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Tourze\BundleDependency\BundleDependencyInterface;
 
-class EasyAdminMenuBundle extends Bundle implements BundleDependencyInterface
+final class EasyAdminMenuBundle extends Bundle implements BundleDependencyInterface
 {
     public static function getBundleDependencies(): array
     {

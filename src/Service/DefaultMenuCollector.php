@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsAlias(id: MenuCollectorInterface::class)]
 #[Autoconfigure(public: true)]
-class DefaultMenuCollector implements MenuCollectorInterface
+final class DefaultMenuCollector implements MenuCollectorInterface
 {
     /**
      * @param iterable<object> $providers

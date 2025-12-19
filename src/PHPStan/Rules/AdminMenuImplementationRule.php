@@ -14,7 +14,7 @@ use Tourze\EasyAdminMenuBundle\Service\MenuProviderInterface;
 /**
  * @implements Rule<InClassNode>
  */
-class AdminMenuImplementationRule implements Rule
+final class AdminMenuImplementationRule implements Rule
 {
     public function getNodeType(): string
     {

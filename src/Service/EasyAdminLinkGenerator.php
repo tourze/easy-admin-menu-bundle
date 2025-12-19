@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
  */
 #[AsAlias(id: LinkGeneratorInterface::class)]
 #[Autoconfigure(public: true)]
-class EasyAdminLinkGenerator implements LinkGeneratorInterface
+final class EasyAdminLinkGenerator implements LinkGeneratorInterface
 {
     public function __construct(
         private readonly AdminUrlGenerator $adminUrlGenerator,
